@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -110,6 +111,16 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+	// Media keys
+	{ 0,                XF86XK_AudioPlay,         spawn,  SHCMD("mpc toggle") },
+	{ 0,                XF86XK_AudioStop,         spawn,  SHCMD("mpc stop") },
+	{ 0,                XF86XK_AudioPrev,         spawn,  SHCMD("mpc prev") },
+	{ 0,                XF86XK_AudioNext,         spawn,  SHCMD("mpc next") },
+	{ MODKEY,           XK_x,                     spawn,  SHCMD("ponymix toggle") },
+	{ 0,                XF86XK_AudioLowerVolume,  spawn,  SHCMD("amixer -c 0 sset Master 5%-") },
+	{ 0,                XF86XK_AudioRaiseVolume,  spawn,  SHCMD("amixer -c 0 sset Master 5%+") },
+	{ 0,                XF86XK_MonBrightnessUp,   spawn,  SHCMD("backlight +50") },
+	{ 0,                XF86XK_MonBrightnessDown, spawn,  SHCMD("backlight -50") },
 };
 
 /* button definitions */
