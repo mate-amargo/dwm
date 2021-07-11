@@ -72,6 +72,9 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *pdfviewer[]  = { "zathura", NULL };
+static const char *passmenu[]  = { "passmenu", NULL };
+static const char *passmenutype[]  = { "passmenu", "--type", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -121,6 +124,10 @@ static Key keys[] = {
 	{ 0,                XF86XK_AudioRaiseVolume,  spawn,  SHCMD("amixer -c 0 sset Master 5%+") },
 	{ 0,                XF86XK_MonBrightnessUp,   spawn,  SHCMD("backlight +50") },
 	{ 0,                XF86XK_MonBrightnessDown, spawn,  SHCMD("backlight -50") },
+	// Programs
+	{ MODKEY,             XK_o,      spawn,          {.v = pdfviewer } },
+	{ MODKEY,             XK_p,      spawn,          {.v = passmenutype } },
+	{ MODKEY|ControlMask, XK_p,      spawn,          {.v = passmenu } },
 };
 
 /* button definitions */
