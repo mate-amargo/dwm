@@ -128,6 +128,13 @@ static Key keys[] = {
 	{ MODKEY,             XK_o,      spawn,          {.v = pdfviewer } },
 	{ MODKEY,             XK_p,      spawn,          {.v = passmenutype } },
 	{ MODKEY|ControlMask, XK_p,      spawn,          {.v = passmenu } },
+	// Screenshots
+	{ 0, XK_Print,      spawn,
+		SHCMD("scrot -u ~/images/screenshots/'%Y-%m-%d-%s_$wx$h.png' && notify-send -u low 'Screenshot of the focused window saved'") },
+	{ ShiftMask, XK_Print,      spawn,
+		SHCMD("scrot -s '%Y-%m-%d-%s_$wx$h.png' -e 'mv $f ~/images/screenshots' && notify-send -u low 'Screenshot of the selected area saved'") },
+	{ MODKEY, XK_Print,      spawn,
+		SHCMD("scrot ~/images/screenshots/'%Y-%m-%d-%s_$wx$h.png' && notify-send -u low 'Screenshot of the full screen saved'") },
 };
 
 /* button definitions */
