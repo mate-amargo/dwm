@@ -19,6 +19,8 @@ static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selbgcolor[]            = "#005577";
+static char col_orange[]            = "#FF4000";
+static char col_black[]             = "#000000";
 static char termcol0[] = "#000000"; /* black   */
 static char termcol1[] = "#ff0000"; /* red     */
 static char termcol2[] = "#33ff00"; /* green   */
@@ -55,13 +57,14 @@ static char *termcolor[] = {
 };
 static char *colors[][3] = {
        /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
-       [SchemeTitle]  = { col_gray4, col_cyan,  col_cyan  },
+       [SchemeNorm] = { normfgcolor, col_black, normbordercolor },
+       [SchemeSel]  = { col_orange,  col_black, col_orange  },
+       [SchemeTitle]  = { selfgcolor, col_black, normbordercolor },
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+/*                          { "1", "2", "3", "4", "5", "6", "7", "8", "9" }; */
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
