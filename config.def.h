@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -97,13 +98,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *pdfviewer[]  = { "zathura", NULL };
+static const char *passmenu[]  = { "passmenu", NULL };
+static const char *passmenutype[]  = { "passmenu", "--type", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -111,9 +115,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -135,7 +139,28 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+	// Media keys
+	{ 0,                XF86XK_AudioPlay,         spawn,  SHCMD("mpc toggle") },
+	{ 0,                XF86XK_AudioStop,         spawn,  SHCMD("mpc stop") },
+	{ 0,                XF86XK_AudioPrev,         spawn,  SHCMD("mpc prev") },
+	{ 0,                XF86XK_AudioNext,         spawn,  SHCMD("mpc next") },
+	{ MODKEY,           XK_x,                     spawn,  SHCMD("ponymix toggle") },
+	{ 0,                XF86XK_AudioLowerVolume,  spawn,  SHCMD("amixer -c 0 sset Master 5%-") },
+	{ 0,                XF86XK_AudioRaiseVolume,  spawn,  SHCMD("amixer -c 0 sset Master 5%+") },
+	{ 0,                XF86XK_MonBrightnessUp,   spawn,  SHCMD("backlight +50") },
+	{ 0,                XF86XK_MonBrightnessDown, spawn,  SHCMD("backlight -50") },
+	// Programs
+	{ MODKEY,             XK_o,      spawn,          {.v = pdfviewer } },
+	{ MODKEY,             XK_p,      spawn,          {.v = passmenutype } },
+	{ MODKEY|ControlMask, XK_p,      spawn,          {.v = passmenu } },
+	// Screenshots
+	{ 0, XK_Print,      spawn,
+		SHCMD("scrot -u ~/images/screenshots/'%Y-%m-%d-%s_$wx$h.png' && notify-send -u low 'Screenshot of the focused window saved'") },
+	{ ShiftMask, XK_Print,      spawn,
+		SHCMD("scrot -s '%Y-%m-%d-%s_$wx$h.png' -e 'mv $f ~/images/screenshots' && notify-send -u low 'Screenshot of the selected area saved'") },
+	{ MODKEY, XK_Print,      spawn,
+		SHCMD("scrot ~/images/screenshots/'%Y-%m-%d-%s_$wx$h.png' && notify-send -u low 'Screenshot of the full screen saved'") },
 };
 
 /* button definitions */
