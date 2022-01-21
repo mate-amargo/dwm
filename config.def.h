@@ -55,11 +55,19 @@ static char *termcolor[] = {
   termcol14,
   termcol15,
 };
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, col_black, normbordercolor },
        [SchemeSel]  = { col_orange,  col_black, col_orange  },
        [SchemeTitle]  = { selfgcolor, col_black, normbordercolor },
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitle]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
